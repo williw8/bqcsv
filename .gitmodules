@@ -1,3 +1,9 @@
 [submodule "csvdb"]
 	path = csvdb
 	url = https://github.com/williw8/csvdb
+[submodule "actions/andmatrix"]
+	path = actions/andmatrix
+	url = https://github.com/williw8/andmatrix
+[submodule "actions/sumelim"]
+	path = actions/sumelim
+	url = https://github.com/williw8/sumelim
