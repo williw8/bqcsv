@@ -53,17 +53,17 @@ class ImportedModule(object):
   def __init__(self,mod,parent_frame):
     self.id = -1
     self.python_module = mod
-    self.plugin = mod.get_plugin(parent_frame)
+    self.plugin = mod.getPlugin(parent_frame)
 
   def getLabel(self):
-    if self.plugin and hasattr(self.plugin,'get_label'):
-      return self.plugin.get_label()
+    if self.plugin and hasattr(self.plugin,'getLabel'):
+      return self.plugin.getLabel()
     return STR_UNKNOWN_LABEL
 
 
   def getDescription(self):
-    if self.plugin and hasattr(self.plugin,'get_description'):
-      return self.plugin.get_description()
+    if self.plugin and hasattr(self.plugin,'getDescription'):
+      return self.plugin.getDescription()
     return STR_NO_DESCRIPTION
 
   def getId(self):
@@ -73,69 +73,11 @@ class ImportedModule(object):
     self.id = ID
 
   def doAction(self,table):
-    if self.plugin and hasattr(self.plugin,'do_action'):
-      self.plugin.do_action(table)
+    if self.plugin and hasattr(self.plugin,'doAction'):
+      self.plugin.doAction(table)
     else:
-      wx.MessageBox('Module has no do_action method', 'Info', wx.OK | wx.ICON_INFORMATION) 
+      wx.MessageBox('Module has no doAction method', 'Info', wx.OK | wx.ICON_INFORMATION) 
   
-class JoinDialog(wx.Dialog):
-
-  def __init__(self,parent,table):
-    wx.Dialog.__init__(self,parent)
-    self.other_table_path = None
-    self.join_column = None
-
-    self.initUI()
-    self.SetSize((320,240))
-    self.SetTitle("Join")
-
-
-  def initUI(self):
-    vbox = wx.BoxSizer(wx.VERTICAL)
-
-    hbox = wx.BoxSizer(wx.HORIZONTAL)
-    x = wx.StaticText(self,-1,"Table to Join")
-    hbox.Add(x)
-    self.other_table = wx.ComboBox(self,style=wx.CB_DROPDOWN,choices=self.table.header)
-    self.other_table.SetEditable(False)
-    self.other_table.SetStringSelection(self.table.header[0])
-    hbox.Add(self.horiz_ctrl)
-    vbox.Add(hbox);
-
-    hbox = wx.BoxSizer(wx.HORIZONTAL)
-    x = wx.StaticText(self,-1,"Join Column")
-    hbox.AddSpacer(BOX_SPACER)
-    hbox.Add(x)
-    hbox.AddSpacer(BOX_SPACER)
-    self.join_column = wx.ComboBox(self,style=wx.CB_DROPDOWN,choices=self.table.header)
-    self.join_column.SetEditable(False)
-    self.join_column.SetStringSelection(self.table.header[-1])
-    hbox.AddSpacer(BOX_SPACER)
-    hbox.Add(self.vert_ctrl)
-    hbox.AddSpacer(BOX_SPACER)
-    vbox.Add(hbox);
-
-    self.ok_button.Bind(wx.EVT_BUTTON,self.onOK)
-    self.cancel_button.Bind(wx.EVT_BUTTON,self.onCancel)
-
-    self.SetSizer(vbox)
-
-  def getOtherTablePath(self):
-    return self.other_table
-
-  def getJoinColumn(self):
-    return self.join_column
-
-  def onOK(self,event):
-    idx = self.other_table.GetCurrentSelection()
-    self.other_table = self.table.header[idx]
-    idx = self.join_column.GetCurrentSelection()
-    self.join_column = self.table.header[idx]
-    self.EndModal(wx.ID_OK)
-
-  def onCancel(self,event):
-    self.EndModal(wx.ID_CANCEL)
-
 class CsvPanel(wx.Panel):
 
   def __init__(self,path,parent,delete_on_exit):
@@ -218,7 +160,7 @@ class MainFrame(wx.Frame):
             new_mod = ImportedModule(mod,self)
             self.modules.append(new_mod)
         except ImportError as ex:
-          pass
+          print('Error importing ' + name + ': ' + ex.message)
 
   def createMenu(self):
     self.menu_bar = wx.MenuBar()
@@ -294,7 +236,6 @@ class MainFrame(wx.Frame):
     except Exception as ex:
       self.showInfoMessage('Error saving file',str(ex.message))
 
-
   def onCloseWindow(self,event):
     self.closingTime()
     self.Destroy()
@@ -308,9 +249,6 @@ class MainFrame(wx.Frame):
     for tab in tabs:
       if hasattr(tab,'close'):
         tab.close()
-
-  def onJoin(self,event):
-    sfr = csvfile.SingleFileReader(path)
 
   def showInfoMessage(self,caption,message):
     dlg = wx.MessageDialog(self,message,caption,wx.OK|wx.ICON_INFORMATION)
