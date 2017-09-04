@@ -100,7 +100,7 @@ class CsvPanel(wx.Panel):
       self.grid.SetColLabelValue(vcol,label)
       vcol += 1 
     vrow = 0
-    for row in self.table.get_iter():
+    for row in self.table.getIter():
       self.grid.AppendRows()
       vcol = 0
       for v in row:
@@ -113,7 +113,7 @@ class CsvPanel(wx.Panel):
     #sizer.Fit(parent)
 
   def save(self,path):
-    store = self.table.get_store()
+    store = self.table.getStore()
     if None is not store:
       store.save(path)
 
