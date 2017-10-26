@@ -10,3 +10,6 @@
 [submodule "actions/join"]
 	path = actions/join
 	url = https://github.com/williw8/join
+[submodule "actions/select"]
+	path = actions/select
+	url = git@github.com:williw8/select.git
