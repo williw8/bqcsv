@@ -9,11 +9,14 @@ if [ 1 == $# ]; then
     cp ../LICENSE bqcsv
     cp -r ../csvdb/* bqcsv/csvdb
     cp ../actions/* bqcsv/actions
-    cp ../actions/join/* bqcsv/actions/join
-    cp ../actions/select/* bqcsv/actions/select
-    $name = "bqcsv_"
-    $name .= $1
-    $name .= ".zip" 
+    cp -r ../actions/join/* bqcsv/actions/join
+    cp -r ../actions/select/* bqcsv/actions/select
+    find bqcsv -name "*.pyc" -exec rm \{\} \; -print
+    find bqcsv -name "*.git*" -exec rm \{\} \; -print
+    name=$(date +%Y%m%d)
+    name=$name"_bqcsv_"
+    name=$name$1
+    name="$name.zip"
     zip -r $name bqcsv
     rm -rf bqcsv 
 else
