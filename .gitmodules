@@ -13,3 +13,6 @@
 [submodule "actions/select"]
 	path = actions/select
 	url = git@github.com:williw8/select.git
+[submodule "actions/colscript"]
+	path = actions/colscript
+	url = git@github.com:williw8/colscript.git
