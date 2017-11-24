@@ -44,6 +44,9 @@ ACTIONS_PATH = 'actions'
 STR_UNKNOWN_LABEL = 'unknown'
 STR_NO_DESCRIPTION = 'none'
 
+STR_COLS_STATUS = 'columns: '
+STR_ROWS_STATUS = 'rows: '
+
 def getTempFilename():
   now = datetime.now()
   return now.strftime('%Y%m%d%H%M%S') + '_' + str(random.randint(0,0xffff)) + '.tmp'
@@ -110,7 +113,9 @@ class CsvPanel(wx.Panel):
     self.grid.AutoSizeColumns(False)
     sizer.Add(self.grid)
     self.SetSizer(sizer)
-    #sizer.Fit(parent)
+    self.main_frame.setStatusText(STR_COLS_STATUS + ' ' + str(vcol) + ', ' + STR_ROWS_STATUS + ' ' + str(vrow))
+
+    self.Bind(wx.grid.EVT_GRID_SELECT_CELL,self.onCellChanged)
 
   def save(self,path):
     store = self.table.getStore()
@@ -126,6 +131,9 @@ class CsvPanel(wx.Panel):
   def action(self,mod):
     mod.doAction(self.table)            
 
+  def onCellChanged(self,event):
+    self.main_frame.setStatusText(str(event.Col) + ',' + str(event.Row))
+
 class MainFrame(wx.Frame):
 
   def __init__(self,parent,title):
@@ -137,6 +145,7 @@ class MainFrame(wx.Frame):
     self.notebook = flatbook.FlatNotebook(self,-1)
     self.Bind(flatbook.EVT_FLATNOTEBOOK_PAGE_CHANGING,self.onPageChanging)
     self.Bind(flatbook.EVT_FLATNOTEBOOK_PAGE_CHANGED,self.onPageChanged)
+    self.Bind(flatbook.EVT_FLATNOTEBOOK_PAGE_CLOSING,self.onPageClosing)
 
     self.Bind(wx.EVT_CLOSE, self.onCloseWindow)
 
@@ -146,6 +155,8 @@ class MainFrame(wx.Frame):
     self.loadModules()
 
     self.createMenu()
+
+    self.status_bar = self.CreateStatusBar()
 
     self.Show(True)
 
@@ -214,6 +225,11 @@ class MainFrame(wx.Frame):
     if None is not window:
       self.current_tab = window
 
+  def onPageClosing(self,event):
+    tab = self.notebook.GetCurrentPage()
+    if hasattr(tab,'close'):
+      tab.close()
+
   def onOpen(self,event):
     try:
       dialog = wx.FileDialog(self)
@@ -249,6 +265,9 @@ class MainFrame(wx.Frame):
     for tab in tabs:
       if hasattr(tab,'close'):
         tab.close()
+
+  def setStatusText(self,text):
+    self.status_bar.SetStatusText(text)
 
   def showInfoMessage(self,caption,message):
     dlg = wx.MessageDialog(self,message,caption,wx.OK|wx.ICON_INFORMATION)
