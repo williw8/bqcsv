@@ -30,7 +30,7 @@ from datetime import datetime
 
 LEFT_FISH = '<{{{(<<'
 RIGHT_FISH = '>>)}}}>'
-MAIN_TITLE = 'bqcsv ' + RIGHT_FISH 
+MAIN_TITLE = ' bqcsv '
 # BOX_SPACER=5
 
 MENU_ID_OPEN = 1001
@@ -278,7 +278,13 @@ class TheApp(wx.App):
 
   def OnInit(self):
     sys.excepthook = self.handle_exception
-    frame = MainFrame(None,MAIN_TITLE)
+    r = random.randint(0,10)
+    title = MAIN_TITLE
+    if 0 == (r & 0x1):
+      title = LEFT_FISH + MAIN_TITLE
+    else: 
+      title = MAIN_TITLE + RIGHT_FISH
+    frame = MainFrame(None,title)
     self.SetTopWindow(frame)
     return True
 
