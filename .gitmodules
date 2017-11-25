@@ -1,15 +1,15 @@
 [submodule "csvdb"]
 	path = csvdb
-	url = git@github.com/williw8/csvdb
+	url = git@github.com/williw8/csvdb.git
 [submodule "actions/andmatrix"]
 	path = actions/andmatrix
-	url = https://github.com/williw8/andmatrix
+	url = git@github.com/williw8/andmatrix.git
 [submodule "actions/sumelim"]
 	path = actions/sumelim
-	url = https://github.com/williw8/sumelim
+	url = git@github.com/williw8/sumelim.git
 [submodule "actions/join"]
 	path = actions/join
-	url = https://github.com/williw8/join
+	url = git@github.com/williw8/join.git
 [submodule "actions/select"]
 	path = actions/select
 	url = git@github.com:williw8/select.git
