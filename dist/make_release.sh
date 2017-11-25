@@ -12,7 +12,7 @@ if [ 1 == $# ]; then
     cp ../actions/* bqcsv/actions
     cp -r ../actions/join/* bqcsv/actions/join
     cp -r ../actions/select/* bqcsv/actions/select
-    cp -r ../actions/select/* bqcsv/actions/colscript
+    cp -r ../actions/colscript/* bqcsv/actions/colscript
     find bqcsv -name "*.pyc" -exec rm \{\} \; -print
     find bqcsv -name "*.git*" -exec rm \{\} \; -print
     name=$(date +%Y%m%d)
