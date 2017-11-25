@@ -2,9 +2,12 @@
 
 Solutions for small data.
 
+This is the development repository.
+
 Download the latest release at https://github.com/williw8/bqcsv-releases
 
 Documentation for the main application is found at https://github.com/williw8/bqcsv/wiki
+
 
 # Library Submodules:
 
