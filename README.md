@@ -8,13 +8,26 @@ Download the latest release at https://github.com/williw8/bqcsv-releases
 
 Documentation for the main application is found at https://github.com/williw8/bqcsv/wiki
 
+# For Developers
 
-# Library Submodules:
+To get the source code for development, use git:
+
+Clone the repository:
+```bash
+git clone https://github.com/williw8/bqcsv.git
+```
+
+Update the submodules:
+```bash
+git submodule update --init
+```
+
+## Library Submodules:
 
 csvdb: https://github.com/williw8/csvdb
    
 
-# Action Plugin Submodules:
+## Action Plugin Submodules:
 
 andmatrix: https://github.com/williw8/andmatrix 
 
