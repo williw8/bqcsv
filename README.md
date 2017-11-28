@@ -17,6 +17,8 @@ Clone the repository:
 git clone https://github.com/williw8/bqcsv.git
 ```
 
+Change to the bqcsv directory
+
 Update the submodules:
 ```bash
 git submodule update --init
